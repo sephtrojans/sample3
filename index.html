@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border Tester and Viewer 😉</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .output-box {
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            width: 50%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .output-box p {
+            margin: 0;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        input, textarea, select, button {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+	    width:15%;
+	    background-color:green;
+	    color:white;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <h2>Border Tester and Viewer 😉</h2>
+    
+    <div class="form-container">
+        <label for="textInput">Content:</label><br>
+        <textarea id="textInput" rows="4" cols="50" placeholder="Encode your content here"></textarea><br><br>
+
+        <label for="borderStyle">Select Border Style:</label><br>
+        <select id="borderStyle">
+            <option value="dotted">Dotted</option>         
+            <option value="dashed">Dashed</option>
+	    <option value="solid">Solid</option>
+            <option value="double">Double</option>
+<option value="groove">Groove</option>
+<option value="ridge">Ridge</option>
+<option value="inset">Inset</option>
+<option value="outset">Outset</option>
+<option value="none">None</option>
+<option value="hidden">Hidden</option>
+
+        </select><br><br>
+
+        <label for="borderColor">Pick Border Color:</label><br>
+        <input type="color" id="borderColor" value="#000000"><br><br>
+
+        <label for="borderWidth">Border Width (px):</label><br>
+        <input type="number" id="borderWidth" min="1" max="10" value="2"><br><br>
+
+        <label for="borderRadius">Border Radius (px):</label><br>
+        <input type="number" id="borderRadius" min="0" max="50" value="0"><br><br>
+
+        <button type="button" onclick="applyBorder()">Apply Border</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+    </div>
+
+    <div id="outputBox" class="output-box">
+        
+        <p id="contentOutput"></p>
+    </div>
+
+    <script>
+        function applyBorder() {
+            // Get form values
+            const textContent = document.getElementById("textInput").value;
+            const borderStyle = document.getElementById("borderStyle").value;
+            const borderColor = document.getElementById("borderColor").value;
+            const borderWidth = document.getElementById("borderWidth").value;
+            const borderRadius = document.getElementById("borderRadius").value;
+
+            // Validate content is entered
+            if (!textContent.trim()) {
+                alert("Please enter some content.");
+                return;
+            }
+
+            // Validate border width (between 1 and 10)
+            if (borderWidth < 1 || borderWidth > 10) {
+                alert("Please enter a valid border width between 1 and 10.");
+                return;
+            }
+
+            // Set content and apply styles
+            const outputBox = document.getElementById("outputBox");
+            const contentOutput = document.getElementById("contentOutput");
+
+            contentOutput.textContent = textContent;
+
+            // Apply border styles
+            outputBox.style.border = `${borderWidth}px ${borderStyle} ${borderColor}`;
+            outputBox.style.borderRadius = `${borderRadius}px`; // Apply border radius
+            outputBox.style.display = "block";  // Show the output box
+        }
+
+        function resetForm() {
+            // Reset all form values and hide the output box
+            document.getElementById("textInput").value = '';
+            document.getElementById("borderStyle").value = 'none';
+            document.getElementById("borderColor").value = '#000000';
+            document.getElementById("borderWidth").value = '0';
+            document.getElementById("borderRadius").value = '0';
+            document.getElementById("outputBox").style.display = 'none';
+        }
+    </script>
+</body>
+</html>
